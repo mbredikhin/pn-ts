@@ -17,9 +17,9 @@ class MatchExpression<I, O> {
 		return this;
 	}
 
-	otherwise(handler: (value: I) => O): O {
+	otherwise(handler: (value: I) => O): MatchExpression<I, O> {
 		this.result = handler(this.value);
-		return this.result;
+		return this;
 	}
 
 	run() {
