@@ -1,3 +1,5 @@
+import predicate from './predicate';
+
 const isObject = (value: any): value is object =>
 	typeof value === 'object' && !Array.isArray(value) && value !== null;
 
@@ -18,12 +20,16 @@ const isEqual = (a: any, b: any): boolean => {
 			),
 		nan: Number.isNaN(a) && Number.isNaN(b),
 		set:
-			Object.getPrototypeOf(a) === Set &&
-			Object.getPrototypeOf(b) === Set &&
+			!predicate.nullish(a) &&
+			!predicate.nullish(b) &&
+			Object.getPrototypeOf(a) === Set.prototype &&
+			Object.getPrototypeOf(b) === Set.prototype &&
 			Array.from(a as Set<any>).every((el) => b.has(el)),
 		map:
-			Object.getPrototypeOf(a) === Map &&
-			Object.getPrototypeOf(b) === Map &&
+			!predicate.nullish(a) &&
+			!predicate.nullish(b) &&
+			Object.getPrototypeOf(a) === Map.prototype &&
+			Object.getPrototypeOf(b) === Map.prototype &&
 			Array.from((a as Map<any, any>).keys()).every(
 				(key) => b.has(key) && b[key] === a[key]
 			),

@@ -1,160 +1,74 @@
-import { match } from '../../index';
+import { match, predicate } from '../../index';
 
-describe('matching by a value', () => {
-	test('number', () => {
-		const a = 1;
-		const b = 1;
-		const result = match(a)
-			.with(b, (value) => value)
-			.run();
-		expect(result).toBe(a);
+describe('with() method', () => {
+	test('matching by value', () => {
+		[
+			null,
+			undefined,
+			0,
+			NaN,
+			'',
+			false,
+			new Set(),
+			new Map([]),
+			[],
+			{}
+		].forEach((value) => {
+			expect(
+				match(value)
+					.with(value, (value) => value)
+					.run()
+			).toStrictEqual(value);
+		});
 	});
 
-	test('string', () => {
-		const a = 'some string';
-		const b = 'some string';
-		const result = match(a)
-			.with(b, (value) => value)
-			.run();
-		expect(result).toBe(a);
+	test('matching by predicate', () => {
+		[
+			{ predicate: predicate.nullish, value: null },
+			{ predicate: predicate.nullish, value: undefined },
+			{ predicate: predicate.number, value: 0 },
+			{ predicate: predicate.nan, value: NaN },
+			{ predicate: predicate.string, value: '' },
+			{ predicate: predicate.boolean, value: false },
+			{ predicate: predicate.set, value: new Set() },
+			{ predicate: predicate.map, value: new Map() },
+			{ predicate: predicate.array, value: [] },
+			{ predicate: predicate.object, value: {} },
+			{ predicate: predicate.any, value: {} }
+		].forEach(({ predicate, value }) => {
+			const result = match(value)
+				.with(predicate, (value) => value)
+				.run();
+			expect(result).toStrictEqual(value);
+		});
 	});
 
-	test('boolean', () => {
-		const a = true;
-		const b = true;
-		const result = match(a)
-			.with(b, (value) => value)
-			.run();
-		expect(result).toBe(a);
-	});
-
-	test('array', () => {
-		const a = [1, null];
-		const b = [1, null];
-		const result = match(a)
-			.with(b, (value) => value)
-			.run();
-		expect(result).toBe(a);
-	});
-
-	test('object', () => {
-		const a = {
+	test('transforms a value', () => {
+		const input = {
 			name: 'Elon',
 			age: 51
 		};
-		const b = {
+		const output = {
 			name: 'Elon',
+			surname: 'Musk',
 			age: 51
 		};
-		const result = match(a)
-			.with(b, (value) => value)
+		const result = match(input)
+			.with(input, (value) => ({ ...value, surname: 'Musk' }))
 			.run();
-		expect(result).toBe(a);
+		expect(result).toStrictEqual(output);
 	});
 });
 
-describe("doesn't matching by a value", () => {
-	test('number', () => {
-		const a = 1;
-		const b = 10;
-		const result = match(a)
-			.with(b, (value) => value)
-			.run();
-		expect(result).toBeUndefined();
-	});
-
-	test('string', () => {
-		const a = 'some string';
-		const b = 'another string';
-		const result = match(a)
-			.with(b, (value) => value)
-			.run();
-		expect(result).toBeUndefined();
-	});
-
-	test('boolean', () => {
-		const a = true;
-		const b = false;
-		const result = match(a)
-			.with(b, (value) => value)
-			.run();
-		expect(result).toBeUndefined();
-	});
-
-	test('array', () => {
-		const a = [1, null];
-		const b = [null, 1];
-		const result = match(a)
-			.with(b, (value) => value)
-			.run();
-		expect(result).toBeUndefined();
-	});
-
-	test('object', () => {
-		const a = {
+describe('otherwise() method', () => {
+	test('returns a value by itself if it was not matched', () => {
+		const input = {
 			name: 'Elon',
 			age: 51
 		};
-		const b = {
-			name: 'Jeff',
-			age: 58
-		};
-		const result = match(a)
-			.with(b, (value) => value)
-			.run();
-		expect(result).toBeUndefined();
-	});
-});
-
-describe("doesn't matching by a value", () => {
-	test('number', () => {
-		const a = 1;
-		const b = 10;
-		const result = match(a)
-			.with(b, (value) => value)
-			.run();
-		expect(result).toBeUndefined();
-	});
-
-	test('string', () => {
-		const a = 'some string';
-		const b = 'another string';
-		const result = match(a)
-			.with(b, (value) => value)
-			.run();
-		expect(result).toBeUndefined();
-	});
-
-	test('boolean', () => {
-		const a = true;
-		const b = false;
-		const result = match(a)
-			.with(b, (value) => value)
-			.run();
-		expect(result).toBeUndefined();
-	});
-
-	test('array', () => {
-		const a = [1, null];
-		const b = [null, 1];
-		const result = match(a)
-			.with(b, (value) => value)
-			.run();
-		expect(result).toBeUndefined();
-	});
-
-	test('object', () => {
-		const a = {
-			name: 'Elon',
-			age: 51
-		};
-		const b = {
-			name: 'Jeff',
-			age: 58
-		};
-		const result = match(a)
-			.with(b, (value) => value)
-			.run();
-		expect(result).toBeUndefined();
+		const result = match(input)
+			.with(predicate.nullish, (value) => ({ ...value, surname: 'Musk' }))
+			.otherwise((value) => value);
+		expect(result).toStrictEqual(input);
 	});
 });
