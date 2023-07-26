@@ -1,4 +1,5 @@
-# pn - simple to use lightweight pattern matching library
+# pn 
+Simple to use lightweight pattern matching library
 
 ## Getting started
 
@@ -18,8 +19,6 @@ npm run test
 ```
 npm run build
 ```
-
----
 
 ## Usage
 
@@ -70,8 +69,6 @@ fruits.forEach((fruit) => {
 	console.log(message);
 });
 ```
-
----
 
 ## Author
 
