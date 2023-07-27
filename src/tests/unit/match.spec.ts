@@ -1,18 +1,31 @@
 import { match, predicate } from '../../index';
 
 describe('with() method', () => {
-	test('matching by value', () => {
+	test('matches by value', () => {
 		[
 			null,
 			undefined,
 			0,
 			NaN,
 			'',
+			'Some string',
 			false,
+			true,
 			new Set(),
-			new Map([]),
+			new Set([1, 2, 3]),
+			new Map([
+				[1, 'one'],
+				[2, 'two'],
+				[3, 'three']
+			]),
 			[],
-			{}
+			[1, 2, 3],
+			{},
+			{
+				one: 1,
+				two: 2,
+				three: 3
+			}
 		].forEach((value) => {
 			expect(
 				match(value)
@@ -22,7 +35,7 @@ describe('with() method', () => {
 		});
 	});
 
-	test('matching by predicate', () => {
+	test('matches by predicate', () => {
 		[
 			{ predicate: predicate.nullish, value: null },
 			{ predicate: predicate.nullish, value: undefined },
@@ -61,14 +74,15 @@ describe('with() method', () => {
 });
 
 describe('otherwise() method', () => {
-	test('returns a value by itself if it was not matched', () => {
+	test(`returns a value by itself if it's not being matched`, () => {
 		const input = {
 			name: 'Elon',
 			age: 51
 		};
 		const result = match(input)
 			.with(predicate.nullish, (value) => ({ ...value, surname: 'Musk' }))
-			.otherwise((value) => value);
+			.otherwise((value) => value)
+			.run();
 		expect(result).toStrictEqual(input);
 	});
 });

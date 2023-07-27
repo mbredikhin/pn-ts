@@ -1,4 +1,5 @@
-# pn 
+# pn
+
 Simple to use lightweight pattern matching library
 
 ## Getting started
@@ -65,7 +66,8 @@ fruits.forEach((fruit) => {
 			({ pulp, skin }) =>
 				`Fruit with ${pulp} pulp and ${skin} skin is unknown to us.
         Let's put it back in the 📦.`
-		);
+		)
+		.run();
 	console.log(message);
 });
 ```
