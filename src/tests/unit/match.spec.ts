@@ -1,32 +1,47 @@
 import { match, predicate } from '../../index';
 
+const emptyString = '';
+const string = 'Some string';
+const emptyArray: any[] = [];
+const array = [1, 2, 3];
+const emptyObject = {};
+const object = {
+	one: 1,
+	two: 2,
+	three: 3
+};
+const emptySet = new Set();
+const set = new Set([1, 2, 3]);
+const emptyMap = new Map();
+const map = new Map([
+	[1, 'one'],
+	[2, 'two'],
+	[3, 'three']
+]);
+
+const values = [
+	null,
+	undefined,
+	0,
+	1,
+	NaN,
+	false,
+	true,
+	emptyString,
+	string,
+	emptyArray,
+	array,
+	emptyObject,
+	object,
+	emptySet,
+	set,
+	emptyMap,
+	map
+];
+
 describe('with() method', () => {
 	test('matches by value', () => {
-		[
-			null,
-			undefined,
-			0,
-			NaN,
-			'',
-			'Some string',
-			false,
-			true,
-			new Set(),
-			new Set([1, 2, 3]),
-			new Map([
-				[1, 'one'],
-				[2, 'two'],
-				[3, 'three']
-			]),
-			[],
-			[1, 2, 3],
-			{},
-			{
-				one: 1,
-				two: 2,
-				three: 3
-			}
-		].forEach((value) => {
+		values.forEach((value) => {
 			expect(
 				match(value)
 					.with(value, (value) => value)
@@ -36,23 +51,26 @@ describe('with() method', () => {
 	});
 
 	test('matches by predicate', () => {
-		[
-			{ predicate: predicate.nullish, value: null },
-			{ predicate: predicate.nullish, value: undefined },
-			{ predicate: predicate.number, value: 0 },
-			{ predicate: predicate.nan, value: NaN },
-			{ predicate: predicate.string, value: '' },
-			{ predicate: predicate.boolean, value: false },
-			{ predicate: predicate.set, value: new Set() },
-			{ predicate: predicate.map, value: new Map() },
-			{ predicate: predicate.array, value: [] },
-			{ predicate: predicate.object, value: {} },
-			{ predicate: predicate.any, value: {} }
-		].forEach(({ predicate, value }) => {
-			const result = match(value)
-				.with(predicate, (value) => value)
-				.run();
-			expect(result).toStrictEqual(value);
+		const entries = [
+			{ predicate: predicate.nullish, expectation: [null, undefined] },
+			{ predicate: predicate.number, expectation: [0, 1] },
+			{ predicate: predicate.nan, expectation: [NaN] },
+			{ predicate: predicate.boolean, expectation: [false, true] },
+			{ predicate: predicate.string, expectation: [emptyString, string] },
+			{ predicate: predicate.array, expectation: [emptyArray, array] },
+			{ predicate: predicate.object, expectation: [emptyObject, object] },
+			{ predicate: predicate.set, expectation: [emptySet, set] },
+			{ predicate: predicate.map, expectation: [emptyMap, map] },
+			{ predicate: predicate.any, expectation: values }
+		];
+		entries.forEach(({ predicate, expectation }) => {
+			const result: any[] = [];
+			values.forEach((value) => {
+				match(value)
+					.with(predicate, (v) => result.push(v))
+					.run();
+			});
+			expect(result).toStrictEqual(expectation);
 		});
 	});
 
