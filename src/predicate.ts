@@ -2,6 +2,7 @@ const predicate = {
 	nullish: (value: any) => [undefined, null].includes(value),
 	number: (value: any) =>
 		!predicate.nullish(value) &&
+		!Number.isNaN(value) &&
 		Object.getPrototypeOf(value) === Number.prototype,
 	nan: (value: any) => !predicate.nullish(value) && Number.isNaN(value),
 	string: (value: any) =>
