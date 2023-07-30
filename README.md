@@ -1,4 +1,4 @@
-# pn
+# pn-ts
 
 Simple to use lightweight pattern matching library
 
@@ -23,7 +23,7 @@ npm run build
 
 ## Usage
 
-pn is quite simple to use. Here are some examples:
+pn-ts is quite simple to use. Here are some examples:
 
 ```typescript
 import { match, predicate } from 'pn';

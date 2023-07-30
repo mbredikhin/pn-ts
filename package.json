@@ -1,5 +1,5 @@
 {
-	"name": "pn",
+	"name": "pn-ts",
 	"version": "1.0.0",
 	"type": "module",
 	"source": "src/index.ts",
@@ -14,9 +14,15 @@
 		"build": "microbundle",
 		"dev": "microbundle watch",
 		"lint": "eslint ./src/**/*.ts",
-		"test": "./node_modules/.bin/jest"
+		"test": "./node_modules/.bin/jest",
+		"publish": "npm publish"
 	},
 	"author": "mbredikhin",
+	"keywords": [
+		"pattern matching",
+		"match",
+		"switch"
+	],
 	"license": "MIT",
 	"devDependencies": {
 		"@babel/core": "^7.18.10",
