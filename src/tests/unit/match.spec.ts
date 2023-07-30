@@ -66,7 +66,15 @@ describe('with() method', () => {
 				expectation: [object]
 			},
 			{
+				predicate: { one: predicate.number, two: 2 },
+				expectation: [object]
+			},
+			{
 				predicate: { one: predicate.number, two: predicate.nan },
+				expectation: []
+			},
+			{
+				predicate: { one: predicate.number, two: 3 },
 				expectation: []
 			},
 			{
