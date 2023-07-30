@@ -61,6 +61,18 @@ describe('with() method', () => {
 			{ predicate: predicate.string, expectation: [emptyString, string] },
 			{ predicate: predicate.array, expectation: [emptyArray, array] },
 			{ predicate: predicate.object, expectation: [emptyObject, object] },
+			{
+				predicate: { one: predicate.number, two: predicate.number },
+				expectation: [object]
+			},
+			{
+				predicate: { one: predicate.number, two: predicate.nan },
+				expectation: []
+			},
+			{
+				predicate: { zero: predicate.string, one: predicate.number },
+				expectation: []
+			},
 			{ predicate: predicate.set, expectation: [emptySet, set] },
 			{ predicate: predicate.map, expectation: [emptyMap, map] },
 			{ predicate: predicate.symbol, expectation: [symbol] },
