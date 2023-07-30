@@ -18,6 +18,7 @@ const map = new Map([
 	[2, 'two'],
 	[3, 'three']
 ]);
+const symbol = Symbol('s');
 
 const values = [
 	null,
@@ -36,7 +37,8 @@ const values = [
 	emptySet,
 	set,
 	emptyMap,
-	map
+	map,
+	symbol
 ];
 
 describe('with() method', () => {
@@ -61,6 +63,7 @@ describe('with() method', () => {
 			{ predicate: predicate.object, expectation: [emptyObject, object] },
 			{ predicate: predicate.set, expectation: [emptySet, set] },
 			{ predicate: predicate.map, expectation: [emptyMap, map] },
+			{ predicate: predicate.symbol, expectation: [symbol] },
 			{ predicate: predicate.any, expectation: values }
 		];
 		entries.forEach(({ predicate, expectation }) => {

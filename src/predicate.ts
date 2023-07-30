@@ -19,6 +19,9 @@ const predicate = {
 	object: (value: any) =>
 		!predicate.nullish(value) &&
 		Object.getPrototypeOf(value) === Object.prototype,
+	symbol: (value: any) =>
+		!predicate.nullish(value) &&
+		Object.getPrototypeOf(value) === Symbol.prototype,
 	any: (value?: any) => true
 };
 
