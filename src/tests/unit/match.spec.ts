@@ -70,7 +70,19 @@ describe('with() method', () => {
 				expectation: []
 			},
 			{
-				predicate: { zero: predicate.string, one: predicate.number },
+				predicate: [predicate.number],
+				expectation: [array]
+			},
+			{
+				predicate: [predicate.number, predicate.number, 3],
+				expectation: [array]
+			},
+			{
+				predicate: [predicate.string],
+				expectation: []
+			},
+			{
+				predicate: [predicate.number, predicate.string, 3],
 				expectation: []
 			},
 			{ predicate: predicate.set, expectation: [emptySet, set] },

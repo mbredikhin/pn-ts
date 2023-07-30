@@ -9,8 +9,8 @@ const isMatching = <I, P extends Pattern<I> | Predicate<I>>(
 		return p(value);
 	}
 	if (
-		predicate.object(value) &&
-		predicate.object(p) &&
+		((predicate.object(value) && predicate.object(p)) ||
+			(predicate.array(value) && predicate.array(p))) &&
 		Object.keys(value).length &&
 		Object.keys(p).length &&
 		Object.keys(p).every((key) => key in value)

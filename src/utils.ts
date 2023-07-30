@@ -5,6 +5,7 @@ const isEqual = (a: any, b: any): boolean => {
 		array:
 			predicate.array(a) &&
 			predicate.array(b) &&
+			a.length === b.length &&
 			a.every((el, idx) => b[idx] === el),
 		object:
 			predicate.object(a) &&
