@@ -1,24 +1,11 @@
 # pn-ts
 
-Simple to use lightweight pattern matching library
+Easy to use, lightweight [pattern matching](https://en.wikipedia.org/wiki/Pattern_matching) library.
 
-## Getting started
+## Installation
 
-```
-npm install
-npm run dev
-```
-
-## Run tests
-
-```
-npm run test
-```
-
-## Production build
-
-```
-npm run build
+```bash
+npm install pn-ts
 ```
 
 ## Usage
@@ -70,6 +57,27 @@ fruits.forEach((fruit) => {
 		.run();
 	console.log(message);
 });
+```
+
+## Local development
+
+```bash
+git clone git@github.com:mbredikhin/pn-ts.git
+cd pn-ts
+npm install
+npm run dev
+```
+
+## Run tests
+
+```bash
+npm run test
+```
+
+## Production build
+
+```bash
+npm run build
 ```
 
 ## Author
