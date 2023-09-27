@@ -1,3 +1,5 @@
+declare module 'pn-ts';
+
 type Primitive = number | boolean | string | null | undefined;
 
 type Pattern<T> = T extends Primitive | Array<any>

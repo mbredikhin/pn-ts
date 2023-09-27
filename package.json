@@ -1,15 +1,16 @@
 {
 	"name": "pn-ts",
-	"version": "1.0.0",
+	"version": "0.0.7",
 	"type": "module",
 	"source": "src/index.ts",
+	"main": "dist/index.umd.js",
+	"module": "dist/index.modern.module.js",
+	"types": "dist/index.d.ts",
 	"exports": {
+		"types": "./dist/index.d.ts",
 		"require": "./dist/index.cjs",
 		"default": "./dist/index.modern.js"
 	},
-	"main": "./dist/index.cjs",
-	"module": "./dist/index.module.js",
-	"unpkg": "./dist/index.umd.js",
 	"scripts": {
 		"build": "microbundle",
 		"dev": "microbundle watch",
@@ -17,7 +18,10 @@
 		"test": "./node_modules/.bin/jest",
 		"publish": "npm publish"
 	},
-	"author": "mbredikhin",
+	"author": {
+		"name": "Maxim Bredikhin",
+		"url": "https://github.com/mbredikhin"
+	},
 	"keywords": [
 		"pattern matching",
 		"match",
